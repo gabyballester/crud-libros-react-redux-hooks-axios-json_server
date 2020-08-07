@@ -40,19 +40,40 @@ export const agregarProductoExito = (producto) => ({
   payload: producto,
 });
 
-export const agregarProductoError = error =>({
-    type: AGREGAR_PRODUCTO_ERROR,
-    // payload: error //paso el error pero en reducer no existe
+export const agregarProductoError = error => ({
+  type: AGREGAR_PRODUCTO_ERROR,
+  // payload: error //paso el error pero en reducer no existe
 })
 
 // Función principal
 // obtener listado de productos (consultar API)
-export function obtenerProductosAction(){
-  return(dispatch) => { // despacha llamada a función
+export function obtenerProductosAction() {
+  return (dispatch) => { // despacha llamada a función
     dispatch(obtenerProductosComienzo());
+    clienteAxios.get('/libros')
+      .then(respuesta => {
+        // console.log(respuesta);
+        dispatch(descargaProductosExitosa(respuesta.data))
+      })
+      .catch(error => {
+        console.log(error);
+        dispatch(descargaProductosError())
+      })
   }
 }
+
 // función que llama a la action
-export const obtenerProductosComienzo=()=>({
+export const obtenerProductosComienzo = () => ({
   type: DESCARGA_PRODUCTOS_INICIADA
+})
+
+//función resultado exitoso
+export const descargaProductosExitosa = productos => ({
+  type: DESCARGA_PRODUCTOS_EXITOSA,
+  payload: productos
+})
+
+// función para resultado erróneo
+export const descargaProductosError = () =>({
+  type: DESCARGA_PRODUCTOS_ERROR
 })
