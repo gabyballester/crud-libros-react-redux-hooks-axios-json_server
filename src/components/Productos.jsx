@@ -1,6 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
+
+// Redux
+import {useDispatch, useSelector} from 'react-redux';
+import { obtenerProductosAction, } from '../actions/productosActions';
 
 const Productos = () => {
+
+  // LLamada a la acción principal para mostrar productos
+const dispatch = useDispatch();
+
+useEffect(() =>{
+  // Productos cuando el componente esté cargado
+  const cargarProductos = () => dispatch(obtenerProductosAction());
+  cargarProductos(); //llamo a la función
+})
+
+// Acceder al state
+const loading = useSelector (state => state.productos.loading)
+
   return (
     <React.Fragment>
       <h2 className="text-center my-5">Listado de Productos</h2>
@@ -14,6 +31,7 @@ const Productos = () => {
         </thead>
         <tbody></tbody>
       </table>
+      {loading ? 'Cargando...': null}
     </React.Fragment>
   );
 };

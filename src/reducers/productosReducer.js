@@ -41,12 +41,12 @@ export default function (state = initialState, action) {
         ...state, // copia del state
         error: true,
       };
-    case COMENZAR_DESCARGA_PRODUCTOS:
+    case DESCARGA_PRODUCTOS_INICIADA:
       return {
         ...state, // copia del state
         loading: true,
       };
-    case COMENZAR_DESCARGA_PRODUCTOS_EXITOSA:
+    case DESCARGA_PRODUCTOS_EXITOSA:
       // introduzco en el array de state el payload dentro de productos
       return {
         ...state,
@@ -54,7 +54,7 @@ export default function (state = initialState, action) {
         loading: false,
         error: false,
       };
-    case COMENZAR_DESCARGA_PRODUCTOS_ERROR:
+    case DESCARGA_PRODUCTOS_ERROR:
       return { ...state, productos: [], error: true, loading: false };
     default:
       return state;
