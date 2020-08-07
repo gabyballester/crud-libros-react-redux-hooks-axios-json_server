@@ -18,7 +18,7 @@ const NuevoProducto = () => {
   const submitNuevoProducto = (e) => {
     e.preventDefault();
     // hacemos aquí la llamada a agregar Producto
-    agregarProducto(nombre, precio);
+    agregarProducto({nombre, precio});
 
     // Validar formulario
     if (nombre.trim() === "" || precio.trim() === "") {
