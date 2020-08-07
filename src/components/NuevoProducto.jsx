@@ -1,13 +1,24 @@
 import React, { useState } from "react";
 
+//Redux
+import { crearNuevoProductoAction } from "../actions/productosActions";
+import { useDispatch } from "react-redux";
+
 const NuevoProducto = () => {
   //state inicial vacío
   const [nombre, guardarNombre] = useState("");
   const [precio, guardarPrecio] = useState("");
 
+  // Crear el nuevo producto
+  const dispatch = useDispatch(); // llamamos al dispatch
+  // le pasamos producto y despachamos la acción de crear
+  const agregarProducto = (producto) => dispatch(crearNuevoProductoAction(producto));
+
   // Agregar nuevo producto
   const submitNuevoProducto = (e) => {
     e.preventDefault();
+    // hacemos aquí la llamada a agregar Producto
+    agregarProducto(nombre, precio);
 
     // Validar formulario
     if (nombre.trim() === "" || precio.trim() === "") {
@@ -17,8 +28,6 @@ const NuevoProducto = () => {
   };
 
   // Si pasa la validación
-
-  // Crear el nuevo producto
 
   // redireccionar
 
