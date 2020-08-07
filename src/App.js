@@ -1,8 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 // Redux
 import { Provider } from "react-redux";
 import store from "./store";
+
+// Componentes
+import Header from './components/Header.jsx';
+import NuevoProducto from './components/NuevoProducto.jsx';
+import Productos from './components/Productos.jsx';
+import EditarProducto from './components/EditarProducto.jsx';
 
 function App() {
   return (
