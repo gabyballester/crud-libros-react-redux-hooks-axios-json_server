@@ -1,35 +1,51 @@
 import React, { useState } from "react";
 
 //Redux
+import { useDispatch, useSelector } from "react-redux";
 import { crearNuevoProductoAction } from "../actions/productosActions";
-import { useDispatch } from "react-redux";
+import {
+  validarFormularioAction,
+  validacionExito,
+  validacionError,
+} from "../actions/validacionActions";
 
-const NuevoProducto = () => {
+const NuevoProducto = ({ history }) => {
   //state inicial vacío
   const [nombre, guardarNombre] = useState("");
   const [precio, guardarPrecio] = useState("");
 
-  // Crear el nuevo producto
+  // Crear nuevo producto
   const dispatch = useDispatch(); // llamamos al dispatch
   // le pasamos producto y despachamos la acción de crear
-  const agregarProducto = (producto) => dispatch(crearNuevoProductoAction(producto));
+  const agregarProducto = (producto) =>
+    dispatch(crearNuevoProductoAction(producto));
+  // agrego validar formulario
+  const validarFormulario = () => dispatch(validarFormularioAction());
+  // agrego validación exito
+  const exitoValidacion = () => dispatch(validacionExito());
+  // agrego validación error
+  const errorValidacion = () => dispatch(validacionError());
+
+  //Obtener los datos del state
+  const error = useSelector((state) => state.error.error);
 
   // Agregar nuevo producto
   const submitNuevoProducto = (e) => {
     e.preventDefault();
-    // hacemos aquí la llamada a agregar Producto
-    agregarProducto({nombre, precio});
 
+    validarFormulario();
     // Validar formulario
     if (nombre.trim() === "" || precio.trim() === "") {
-      console.log("Falta nombre o precio");
-      return null;
+      errorValidacion(); // si validación es errónea
+      return;
     }
+    exitoValidacion(); // Si pasa la validación
+    // hacemos aquí la llamada a agregar Producto
+    agregarProducto({ nombre, precio });
+
+    // redireccionar
+    history.push("/");
   };
-
-  // Si pasa la validación
-
-  // redireccionar
 
   return (
     <div className="row justify-content-center mt-5">
@@ -67,6 +83,11 @@ const NuevoProducto = () => {
                 Agregar
               </button>
             </form>
+            {error ? (
+              <div className="fontt-weight-bold alert alert-danger text-center mt-4">
+                Todos los campos son obligatorios
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

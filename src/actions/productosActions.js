@@ -28,6 +28,7 @@ export function crearNuevoProductoAction(producto) {
 
 export const nuevoProducto = () => ({
   type: AGREGAR_PRODUCTO,
+  error: null
 });
 
 export const agregarProductoExito = (producto) => ({
