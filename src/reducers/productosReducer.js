@@ -3,6 +3,9 @@ import {
   AGREGAR_PRODUCTO,
   AGREGAR_PRODUCTO_EXITO,
   AGREGAR_PRODUCTO_ERROR,
+  COMENZAR_DESCARGA_PRODUCTOS,
+  COMENZAR_DESCARGA_PRODUCTOS_EXITOSA,
+  COMENZAR_DESCARGA_PRODUCTOS_ERROR,
 } from "../types";
 
 // cada reducer tiene su propio state
@@ -38,7 +41,21 @@ export default function (state = initialState, action) {
         ...state, // copia del state
         error: true,
       };
-
+    case COMENZAR_DESCARGA_PRODUCTOS:
+      return {
+        ...state, // copia del state
+        loading: true,
+      };
+    case COMENZAR_DESCARGA_PRODUCTOS_EXITOSA:
+      // introduzco en el array de state el payload dentro de productos
+      return {
+        ...state,
+        productos: action.payload,
+        loading: false,
+        error: false,
+      };
+    case COMENZAR_DESCARGA_PRODUCTOS_ERROR:
+      return { ...state, productos: [], error: true, loading: false };
     default:
       return state;
   }
