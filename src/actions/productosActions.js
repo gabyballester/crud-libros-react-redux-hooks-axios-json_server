@@ -89,12 +89,11 @@ export function productoEliminarAction(id) {
     // Eliminar en la API
     clienteAxios.delete(`/libros/${id}`)
     .then(respuesta=>{
-      console.log(respuesta);
       // Si lo borra de la API lo borra del state
       dispatch(productoEliminarExito(id));
     })
     .catch(error=>{
-      console.log(error);
+      dispatch(productoEliminarError());
     })
   }
 }
@@ -107,4 +106,8 @@ export const productoEliminarObtener = () => ({
 export const productoEliminarExito = id => ({
   type: PRODUCTO_ELIMINAR_EXITO,
   payload: id
+})
+
+export const productoEliminarError = () => ({
+  type: PRODUCTO_ELIMINAR_ERROR
 })
