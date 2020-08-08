@@ -6,6 +6,9 @@ import {
   DESCARGA_PRODUCTOS_INICIADA,
   DESCARGA_PRODUCTOS_EXITOSA,
   DESCARGA_PRODUCTOS_ERROR,
+  PRODUCTO_ELIMINAR_OBTENER,
+  PRODUCTO_ELIMINAR_EXITO,
+  PRODUCTO_ELIMINAR_ERROR,
 } from "../types";
 
 // cada reducer tiene su propio state
@@ -41,11 +44,13 @@ export default function (state = initialState, action) {
         ...state, // copia del state
         error: true,
       };
+
     case DESCARGA_PRODUCTOS_INICIADA:
       return {
         ...state, // copia del state
         loading: true,
       };
+
     case DESCARGA_PRODUCTOS_EXITOSA:
       // introduzco en el array de state el payload dentro de productos
       return {
@@ -54,8 +59,30 @@ export default function (state = initialState, action) {
         loading: false,
         error: false,
       };
+
     case DESCARGA_PRODUCTOS_ERROR:
       return { ...state, productos: [], error: true, loading: false };
+
+    case PRODUCTO_ELIMINAR_OBTENER:
+      return {
+        ...state, // copia del state
+        error: null,
+      };
+
+    case PRODUCTO_ELIMINAR_EXITO:
+      // introduzco en el array de state el payload dentro de productos
+      return {
+        ...state,
+        error: null,
+        // en caso de exito, eliminamos de state el id indicado
+        productos: state.productos.filter(
+          (producto) => producto.id !== action.payload
+        ),
+      };
+
+    case PRODUCTO_ELIMINAR_ERROR:
+      return { ...state, error: true };
+
     default:
       return state;
   }
