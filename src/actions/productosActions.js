@@ -80,3 +80,16 @@ export const descargaProductosExitosa = productos => ({
 export const descargaProductosError = () => ({
   type: DESCARGA_PRODUCTOS_ERROR
 })
+
+// Función que elimina un producto concreto
+export function productoEliminarAction(id) {
+  // despacha para llamar a las otras funciones
+  return (dispatch) => {
+    dispatch(productoEliminarObtener())
+  }
+}
+
+// esta función inicia la cadena de acciones
+export const productoEliminarObtener = () => ({
+  type: PRODUCTO_ELIMINAR_OBTENER
+})
