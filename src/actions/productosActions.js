@@ -86,10 +86,25 @@ export function productoEliminarAction(id) {
   // despacha para llamar a las otras funciones
   return (dispatch) => {
     dispatch(productoEliminarObtener())
+    // Eliminar en la API
+    clienteAxios.delete(`/libros/${id}`)
+    .then(respuesta=>{
+      console.log(respuesta);
+      // Si lo borra de la API lo borra del state
+      dispatch(productoEliminarExito(id));
+    })
+    .catch(error=>{
+      console.log(error);
+    })
   }
 }
 
 // esta función inicia la cadena de acciones
 export const productoEliminarObtener = () => ({
   type: PRODUCTO_ELIMINAR_OBTENER
+})
+
+export const productoEliminarExito = id => ({
+  type: PRODUCTO_ELIMINAR_EXITO,
+  payload: id
 })
