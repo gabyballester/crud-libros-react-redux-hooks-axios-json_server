@@ -74,6 +74,6 @@ export const descargaProductosExitosa = productos => ({
 })
 
 // función para resultado erróneo
-export const descargaProductosError = () =>({
+export const descargaProductosError = () => ({
   type: DESCARGA_PRODUCTOS_ERROR
 })
