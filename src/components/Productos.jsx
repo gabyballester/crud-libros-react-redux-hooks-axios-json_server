@@ -13,7 +13,7 @@ const Productos = () => {
     // Productos cuando el componente esté cargado
     const cargarProductos = () => dispatch(obtenerProductosAction());
     cargarProductos(); //llamo a la función
-  }, []);
+  }, [dispatch]);
 
   // Acceder al state
   const loading = useSelector((state) => state.productos.loading);

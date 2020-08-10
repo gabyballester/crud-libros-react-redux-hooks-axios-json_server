@@ -9,6 +9,9 @@ import {
   PRODUCTO_ELIMINAR_OBTENER,
   PRODUCTO_ELIMINAR_EXITO,
   PRODUCTO_ELIMINAR_ERROR,
+  PRODUCTO_EDITAR_OBTENER,
+  PRODUCTO_EDITAR_EXITO,
+  PRODUCTO_EDITAR_ERROR
 } from "../types";
 
 import clienteAxios from "../config/axios";
@@ -88,17 +91,17 @@ export function productoEliminarAction(id) {
     dispatch(productoEliminarObtener())
     // Eliminar en la API
     clienteAxios.delete(`/libros/${id}`)
-    .then(respuesta=>{
-      // Si lo borra de la API lo borra del state
-      dispatch(productoEliminarExito(id));
-    })
-    .catch(error=>{
-      dispatch(productoEliminarError());
-    })
+      .then(respuesta => {
+        // Si lo borra de la API lo borra del state
+        dispatch(productoEliminarExito(id));
+      })
+      .catch(error => {
+        dispatch(productoEliminarError());
+      })
   }
 }
 
-// esta función inicia la cadena de acciones
+// Esta función inicia la cadena de acciones
 export const productoEliminarObtener = () => ({
   type: PRODUCTO_ELIMINAR_OBTENER
 })
@@ -110,4 +113,38 @@ export const productoEliminarExito = id => ({
 
 export const productoEliminarError = () => ({
   type: PRODUCTO_ELIMINAR_ERROR
+})
+
+// Obtener el Producto a Editar
+// función principal que despacha el inicio de la acción
+export function productoEditarObtenerAction (id) {
+  return (dispatch) => {
+    // despachamos la acción de obtención declarada más abajo
+    dispatch(productoObtenerAction());
+    //obtener producto de la API con axios
+    clienteAxios.get(`/libros/${id}`)
+    .then(respuesta=>{
+      console.log(respuesta.data);
+      dispatch(productoEditarObtenerExito(respuesta.data))
+    })
+    .catch(error=>{
+      console.log(error);
+      dispatch(productoEditarObtenerError());
+    })
+  }
+}
+
+// Función para obtener el producto
+export const productoObtenerAction = () => ({
+  type: PRODUCTO_EDITAR_OBTENER
+})
+
+// Función para manejar resultado ok
+export const productoEditarObtenerExito = producto =>({
+  type: PRODUCTO_EDITAR_EXITO,
+  payload: producto
+})
+
+export const productoEditarObtenerError = () => ({
+  type: PRODUCTO_EDITAR_ERROR
 })
