@@ -12,6 +12,9 @@ import {
   PRODUCTO_EDITAR_OBTENER,
   PRODUCTO_EDITAR_EXITO,
   PRODUCTO_EDITAR_ERROR,
+  PRODUCTO_EDITADO_COMENZAR,
+  PRODUCTO_EDITADO_EXITO,
+  PRODUCTO_EDITADO_ERROR,
 } from "../types";
 
 // cada reducer tiene su propio state
@@ -19,7 +22,7 @@ const initialState = {
   productos: [], //tendremos un array de productos
   error: false, // tendremos un registro de error
   loading: false, // spinner para decir cargando
-  producto: {}
+  producto: {},
 };
 
 // definimos el reducer
@@ -53,7 +56,7 @@ export default function (state = initialState, action) {
       return {
         ...state, // copia del state
         loading: true,
-        producto: {}
+        producto: {},
       };
 
     case DESCARGA_PRODUCTOS_EXITOSA:
@@ -63,7 +66,7 @@ export default function (state = initialState, action) {
         productos: action.payload,
         loading: false,
         error: false,
-        producto: {}
+        producto: {},
       };
 
     case DESCARGA_PRODUCTOS_ERROR:
@@ -72,7 +75,7 @@ export default function (state = initialState, action) {
         productos: [],
         error: true,
         loading: false,
-        producto: {}
+        producto: {},
       };
 
     case PRODUCTO_ELIMINAR_OBTENER:
@@ -103,7 +106,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         error: null,
-        producto: action.payload
+        producto: action.payload,
       };
 
     case PRODUCTO_EDITAR_ERROR:
@@ -111,6 +114,28 @@ export default function (state = initialState, action) {
         ...state,
         error: true,
       };
+
+    case PRODUCTO_EDITADO_COMENZAR:
+      return { ...state, error: null };
+
+    case PRODUCTO_EDITADO_EXITO:
+      return {
+        ...state,
+        error: null,
+        // mapeo productos y verifico que el producto y payload tengan el mismo id
+        productos: state.productos.map((producto) =>
+          //ternario; si se cumple => añade el editado, si no => lo deja igual.
+          producto.id === action.payload.id
+            ? (producto = action.payload)
+            : producto
+        ),
+      };
+
+      case PRODUCTO_EDITADO_ERROR:
+        return {
+          ...state,
+          error: true,
+        };
 
     default:
       return state;
