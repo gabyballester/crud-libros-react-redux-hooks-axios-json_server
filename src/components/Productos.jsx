@@ -25,7 +25,7 @@ const Productos = () => {
       {error ? <div className="font-weight-bold alert alert-danger
         text-center mt-4" > Hubo un error... </div>  : null}
               
-          <h2 className="text-center my-5">Listado de Productos</h2>
+          <h2 className="text-center my-5">Listado de Libros</h2>
           <table className="table table-striped">
             <thead className="bg-primary table-dark">
               <tr>

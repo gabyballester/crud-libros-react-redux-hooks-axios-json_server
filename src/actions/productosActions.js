@@ -18,6 +18,7 @@ import {
 } from "../types";
 
 import clienteAxios from "../config/axios";
+import Swal from 'sweetalert2';
 
 // Función principal - Crear un nuevo producto
 export function crearNuevoProductoAction(producto) {
@@ -168,6 +169,7 @@ export function productoEditadoAction(producto) {
         // console.log(respuesta);
         // llamo a la función de éxito + producto(payload)
         dispatch(productoEditadoExito(respuesta.data));
+        Swal.fire('Almacenado', 'Producto actualizado!!', 'success')
       })
       .catch((error) => {
         // console.log(error);

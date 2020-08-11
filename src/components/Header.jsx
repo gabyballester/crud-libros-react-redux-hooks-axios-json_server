@@ -10,7 +10,7 @@ const Header = () => {
       <div className="container">
         <h3>
           <Link to={"/"} className="text-light">
-            CRUD - React, Redux, Hooks, Rest API y Axios
+            CRUD - React, Redux, Hooks + json-server API
           </Link>
         </h3>
         <Link

@@ -6,8 +6,13 @@ import {
   productoEditarAction,
   productoEditadoAction,
 } from "../actions/productosActions";
+import {
+  validarFormularioAction,
+  validacionExito,
+  validacionError,
+} from "../actions/validacionActions";
 
-const EditarProducto = ({ match }) => {
+const EditarProducto = ({ history, match }) => {
   // hago uso del useRef para capturar los inputs y editarlos luego
   const nombreRef = useRef("");
   const precioRef = useRef("");
@@ -16,7 +21,14 @@ const EditarProducto = ({ match }) => {
   const dispatch = useDispatch();
   //Creamos un alias para cuando se edite el producto
   // sólo se pasa payload si queremos cambiar algo en el state
-  const editarProducto = (producto) => dispatch(productoEditadoAction(producto));
+  const editarProducto = (producto) =>
+    dispatch(productoEditadoAction(producto));
+  // agrego validar formulario
+  const validarFormulario = () => dispatch(validarFormularioAction());
+  // agrego validación exito
+  const validExito = () => dispatch(validacionExito());
+  // agrego validación error
+  const validError = () => dispatch(validacionError());
   //obtener el ID a editar
   const { id } = match.params;
   // lo llamamos al cargarde el componente
@@ -35,19 +47,25 @@ const EditarProducto = ({ match }) => {
     e.preventDefault();
 
     //Validar formulario
-    
-
+    validarFormulario();
+    //Si error
+    if(nombreRef.current.value.trim()==='' || precioRef.current.value.trim()===''){
+      validError();
+      return; // corto la ejecución en caso de error
+    }
     //Si todo ok
-
+    validExito()
     //Guardarlos cambios
     // llamo al alias y le paso el objeto
-    editarProducto({ // le paso las propiedades
-      id, 
+    editarProducto({
+      // le paso las propiedades
+      id,
       nombre: nombreRef.current.value,
-      precio: precioRef.current.value
-     })
+      precio: precioRef.current.value,
+    });
 
     //Redireccionar
+    history.push('/');
   };
 
   return (
