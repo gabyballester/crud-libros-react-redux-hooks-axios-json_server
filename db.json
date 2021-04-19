@@ -1,3 +1,9 @@
 {
-  "libros": []
+  "libros": [
+    {
+      "id": 1,
+      "nombre": "Leyendas de pasión (tapa blanda)",
+      "precio": "10"
+    }
+  ]
 }
