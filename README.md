@@ -1,4 +1,4 @@
-## Proyecto CRUD biblioteca 
+## React Web App gestor de bibliotecas
 
 ### Tecnologías usadas:
 ```
